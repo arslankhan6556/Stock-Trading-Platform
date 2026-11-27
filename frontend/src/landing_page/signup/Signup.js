@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
+const DASHBOARD_URL =
+  process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+
 const Signup = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
@@ -15,9 +19,7 @@ const Signup = () => {
     setError("");
 
     try {
-      const endpoint = isLogin
-        ? "http://localhost:3002/login"
-        : "http://localhost:3002/signup";
+      const endpoint = isLogin ? `${API_URL}/login` : `${API_URL}/signup`;
 
       const payload = isLogin
         ? { email, password }
@@ -33,7 +35,7 @@ const Signup = () => {
       );
 
       setTimeout(() => {
-        window.location.href = `http://localhost:3001?username=${encodeURIComponent(
+        window.location.href = `${DASHBOARD_URL}?username=${encodeURIComponent(
           finalUsername,
         )}&email=${encodeURIComponent(finalEmail)}`;
       }, 600);

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+const FRONTEND_URL =
+  process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
+
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -32,7 +35,7 @@ const Menu = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("dashboardUser");
-    window.location.href = "http://localhost:3000/signup";
+    window.location.href = `${FRONTEND_URL}/signup`;
   };
 
   const avatarText =

@@ -1,6 +1,8 @@
 import React, { useState, createContext } from "react";
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
+
 const GeneralContext = createContext({
   openBuyWindow: (uid) => {},
   closeBuyWindow: () => {},
@@ -35,7 +37,7 @@ export const GeneralContextProvider = (props) => {
 
   const handlePlaceOrder = async () => {
     try {
-      await axios.post("http://localhost:3002/newOrder", {
+      await axios.post(`${API_URL}/newOrder`, {
         name: selectedStockUID,
         qty: Number(qty),
         price: Number(price),

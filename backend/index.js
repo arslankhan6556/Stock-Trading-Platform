@@ -31,6 +31,12 @@ const UserSchema = new mongoose.Schema({
 
 const UserModel = mongoose.models.user || mongoose.model("user", UserSchema);
 
+app.get("/", (req, res) => {
+  res
+    .status(200)
+    .json({ status: "OK", message: "Stock Trading API is running" });
+});
+
 app.get("/allHoldings", async (req, res) => {
   try {
     let allHoldings = await HoldingsModel.find({});
@@ -134,8 +140,14 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB connected!");
-});
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("DB connected!");
+    app.listen(PORT, () => {
+      console.log(`App started on port ${PORT}!`);
+    });
+  })
+  .catch((err) => {
+    console.error("DB connection error:", err);
+  });
